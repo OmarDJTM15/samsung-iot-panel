@@ -1,29 +1,42 @@
 import flet as ft
 from device_manager import DeviceManager
 from collections import deque
-import pandas as pd
 import csv
 from datetime import datetime
-import requests
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 
-def upload_data_to_api():
+def upload_to_google_sheets():
     try:
+        # Alcances que permiten acceder a Sheets y Drive
+        scope = [
+            "https://spreadsheets.google.com/feeds",
+            "https://www.googleapis.com/auth/drive"
+        ]
+
+        creds = ServiceAccountCredentials.from_json_keyfile_name(
+            "credentials.json", scope
+        )
+
+        client = gspread.authorize(creds)
+
+        # Abre tu hoja por nombre
+        sheet = client.open("IoT_Data_Logger").sheet1
+
+        # Lee el CSV con pandas
         df = pd.read_csv("data/sensor_log.csv")
-        last_row = df.iloc[-1].to_dict()
 
-        # Simulación: enviar los últimos datos a un endpoint de prueba
-        response = requests.post("https://httpbin.org/post", json=last_row)
+        # Limpia la hoja y sube todo el contenido
+        sheet.clear()
+        sheet.update([df.columns.values.tolist()] + df.values.tolist())
 
-        if response.status_code == 200:
-            print("✅ Datos enviados correctamente:", last_row)
-            return "Datos enviados correctamente a la API."
-        else:
-            print("❌ Error al enviar datos:", response.text)
-            return "Error al enviar datos a la API."
-
+        print("✅ Datos exportados correctamente a Google Sheets.")
+        return "Datos exportados correctamente a Google Sheets."
     except Exception as e:
-        return f"⚠️ Error: {e}"
+        print(f"❌ Error al exportar a Sheets: {e}")
+        return f"⚠️ Error al exportar a Sheets: {e}"
+
 
 def main(page: ft.Page):
     page.title = "Samsung IoT Data Logger"
@@ -105,8 +118,12 @@ def main(page: ft.Page):
                     ft.ElevatedButton("Iniciar", on_click=start),
                     ft.ElevatedButton("Detener", on_click=stop),
                     ft.ElevatedButton("Calcular estadísticas", on_click=calc_stats),
-                    ft.ElevatedButton("Enviar a la nube ☁️", on_click=lambda e: (setattr(status, "value", upload_data_to_api()), page.update())),
-
+                    ft.ElevatedButton(
+                        "Exportar a Google Sheets 📊",
+                        on_click=lambda e: (
+                            setattr(status, "value", upload_to_google_sheets()), page.update()
+                        )
+                    )
                 ], alignment="center"),
                 stats_display,
                 status

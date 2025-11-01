@@ -1,9 +1,11 @@
 # Ignorar entorno virtual
 .venv/
-env/
 
 # Ignorar caché de Python
 __pycache__/
 
 # Ignorar configuración privada
 .env
+
+# Ignorar configuración de credenciales
+credentials.json
