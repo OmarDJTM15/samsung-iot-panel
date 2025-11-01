@@ -4,6 +4,26 @@ from collections import deque
 import pandas as pd
 import csv
 from datetime import datetime
+import requests
+import pandas as pd
+
+def upload_data_to_api():
+    try:
+        df = pd.read_csv("data/sensor_log.csv")
+        last_row = df.iloc[-1].to_dict()
+
+        # Simulación: enviar los últimos datos a un endpoint de prueba
+        response = requests.post("https://httpbin.org/post", json=last_row)
+
+        if response.status_code == 200:
+            print("✅ Datos enviados correctamente:", last_row)
+            return "Datos enviados correctamente a la API."
+        else:
+            print("❌ Error al enviar datos:", response.text)
+            return "Error al enviar datos a la API."
+
+    except Exception as e:
+        return f"⚠️ Error: {e}"
 
 def main(page: ft.Page):
     page.title = "Samsung IoT Data Logger"
@@ -84,7 +104,9 @@ def main(page: ft.Page):
                 ft.Row([
                     ft.ElevatedButton("Iniciar", on_click=start),
                     ft.ElevatedButton("Detener", on_click=stop),
-                    ft.ElevatedButton("Calcular estadísticas", on_click=calc_stats)
+                    ft.ElevatedButton("Calcular estadísticas", on_click=calc_stats),
+                    ft.ElevatedButton("Enviar a la nube ☁️", on_click=lambda e: (setattr(status, "value", upload_data_to_api()), page.update())),
+
                 ], alignment="center"),
                 stats_display,
                 status
