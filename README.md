@@ -1,6 +1,6 @@
 <!-- 🟦 Banner del Proyecto -->
 <p align="center">
-  <img src="img/iot-banner-samsung-style.png" width="800" alt="IoT Dashboard Banner">
+  <img src="img/iot-banner-samsung-style.png" width="800" alt="240">
 </p>
 
 <h1 align="center">🏠 Samsung IoT Data Logger</h1>
@@ -142,3 +142,4 @@ Este proyecto se distribuye bajo la licencia MIT, lo que permite su uso libre co
   A la comunidad de Flet y Python IoT.
   A los recursos educativos de Google Cloud Developers.
   Y a todos los mentores que promueven el aprendizaje práctico y profesional.
+
