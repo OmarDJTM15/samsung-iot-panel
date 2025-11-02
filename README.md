@@ -1,6 +1,6 @@
 <!-- 🟦 Banner del Proyecto -->
 <p align="center">
-  <img src="[https://github.com/OmarDJTM15/web/iot-banner-samsung-style.png](https://github.com/OmarDJTM15/web/blob/main/iot-banner-samsung-style.png?raw=true)" width="800" alt="IoT Dashboard Banner">
+  <img src="img/iot-banner-samsung-style.png" width="800" alt="IoT Dashboard Banner">
 </p>
 
 <h1 align="center">🏠 Samsung IoT Data Logger</h1>
