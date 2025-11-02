@@ -1,6 +1,6 @@
 <!-- 🟦 Banner del Proyecto -->
 <p align="center">
-  <img src="https://i.ibb.co/ySTj8jX/iot-banner-samsung-style.png" width="800" alt="IoT Dashboard Banner">
+  <img src="https://github.com/OmarDJTM15/web/iot-banner-samsung-style.png" width="800" alt="IoT Dashboard Banner">
 </p>
 
 <h1 align="center">🏠 Samsung IoT Data Logger</h1>
